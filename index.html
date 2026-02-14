@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#dc2626',
+secondary: '#e11d48'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+},
+fontFamily: {
+'dancing': ['Dancing Script', 'cursive'],
+'inter': ['Inter', 'sans-serif']
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before {
+content: "\f3c2";
+}
+.typewriter {
+overflow: hidden;
+border-right: 0.15em solid #ffffff;
+white-space: nowrap;
+margin: 0 auto;
+letter-spacing: 0.15em;
+animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+@keyframes typing {
+from { width: 0 }
+to { width: 100% }
+}
+@keyframes blink-caret {
+from, to { border-color: transparent }
+50% { border-color: #ffffff; }
+}
+.floating-hearts {
+position: absolute;
+width: 100%;
+height: 100%;
+overflow: hidden;
+pointer-events: none;
+}
+.heart {
+position: absolute;
+font-size: 1.5rem;
+color: rgba(249, 168, 212, 0.6);
+animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+10% { opacity: 1; }
+90% { opacity: 1; }
+100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+.pulse-heart {
+animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.1); }
+}
+.card-hover {
+transition: all 0.3s ease;
+}
+.card-hover:hover {
+transform: translateY(-8px);
+box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+.timeline-item {
+opacity: 0;
+transform: translateY(30px);
+transition: all 0.6s ease;
+}
+.timeline-item.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.envelope {
+perspective: 1000px;
+}
+.envelope-flap {
+transform-origin: top;
+transition: transform 0.8s ease;
+}
+.envelope.open .envelope-flap {
+transform: rotateX(-180deg);
+}
+.letter {
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.8s ease 0.3s;
+}
+.envelope.open .letter {
+opacity: 1;
+transform: translateY(0);
+}
+.confetti {
+position: fixed;
+width: 10px;
+height: 10px;
+background: #dc2626;
+animation: confetti-fall 3s ease-out forwards;
+pointer-events: none;
+}
+@keyframes confetti-fall {
+0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.love-popup {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0);
+z-index: 1000;
+opacity: 0;
+transition: all 0.3s ease;
+pointer-events: none;
+}
+.love-popup.active {
+transform: translate(-50%, -50%) scale(1);
+opacity: 1;
+pointer-events: all;
+}
+.love-overlay {
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.7);
+z-index: 999;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s ease;
+backdrop-filter: blur(5px);
+}
+.love-overlay.active {
+opacity: 1;
+pointer-events: all;
+}
+.hero-section {
+position: relative;
+overflow: hidden;
+}
+.hero-section::before {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(225, 29, 72, 0.05));
+pointer-events: none;
+z-index: 1;
+}
+.glass-morphism {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+}
+.gradient-text {
+background: linear-gradient(135deg, #dc2626, #e11d48);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.section-divider {
+position: relative;
+}
+.section-divider::before {
+content: '';
+position: absolute;
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+width: 100px;
+height: 4px;
+background: linear-gradient(90deg, #dc2626, #e11d48);
+border-radius: 2px;
+}
+.floating-animation {
+animation: floating 3s ease-in-out infinite;
+}
+@keyframes floating {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-20px); }
+}
+.shine-effect {
+position: relative;
+overflow: hidden;
+}
+.shine-effect::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+transform: rotate(45deg);
+animation: shine 3s infinite;
+}
+@keyframes shine {
+0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+}
+.button-hover-effect {
+position: relative;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+.button-hover-effect:hover {
+transform: translateY(-2px);
+box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+.button-hover-effect:active {
+transform: translateY(0);
+}
+.heart-explosion {
+position: fixed;
+pointer-events: none;
+z-index: 9999;
+}
+.heart-particle {
+position: absolute;
+font-size: 1.5rem;
+animation: heartExplode 2s ease-out forwards;
+}
+@keyframes heartExplode {
+0% {
+transform: translate(-50%, -50%) scale(0) rotate(0deg);
+opacity: 1;
+}
+100% {
+transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
+opacity: 0;
+}
+}
+.premium-shadow {
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.text-shadow-soft {
+text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body class="font-inter bg-gradient-to-br from-rose-50 via-pink-50 to-orange-50 min-h-screen">
+<div class="floating-hearts">
+<div class="heart" style="left: 10%; animation-delay: 0s;">💕</div>
+<div class="heart" style="left: 20%; animation-delay: 1s;">💖</div>
+<div class="heart" style="left: 30%; animation-delay: 2s;">💝</div>
+<div class="heart" style="left: 40%; animation-delay: 3s;">💗</div>
+<div class="heart" style="left: 50%; animation-delay: 4s;">💕</div>
+<div class="heart" style="left: 60%; animation-delay: 5s;">💖</div>
+<div class="heart" style="left: 70%; animation-delay: 0.5s;">💝</div>
+<div class="heart" style="left: 80%; animation-delay: 1.5s;">💗</div>
+<div class="heart" style="left: 90%; animation-delay: 2.5s;">💕</div>
+</div>
+<section class="hero-section relative min-h-screen flex items-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-black/20 z-10"></div>
+<div class="w-full lg:w-1/2 relative z-20 text-left px-8 lg:px-16">
+<h1 class="font-dancing text-5xl lg:text-8xl font-bold text-white mb-6 drop-shadow-2xl text-shadow-soft floating-animation" style="text-shadow: 3px 3px 12px rgba(0,0,0,0.9);">
+Will You Be My Valentine?
+</h1>
+<div class="typewriter text-lg lg:text-2xl text-white mb-8 font-light max-w-2xl" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.9);">
+To the most beautiful soul I know...
+</div>
+<p class="text-base lg:text-xl text-white mb-12 max-w-2xl leading-relaxed font-medium" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.9);">
+Every moment with you feels like a dream I never want to wake up from. Your smile lights up my world, and your beautiful spirit makes everything better.
+</p>
+<button class="button-hover-effect bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 !rounded-button text-lg font-semibold hover:from-secondary hover:to-primary transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer shine-effect">
+Discover My Heart 💕
+</button>
+</div>
+<div class="absolute inset-0" style="background-image: url('images/heroPhoto.jpg'); background-size: cover; background-position: center center; image-rendering: crisp-edges; background-repeat: no-repeat;">
+<div class="absolute inset-0 lg:bg-gradient-to-r lg:from-black/30 lg:via-transparent lg:to-black/10"></div>
+</div>
+</section>
+</修改前>
+<section class="py-20 px-4 section-divider">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-dancing text-5xl text-center text-gray-800 mb-8 gradient-text">Your Beautiful Memories</h2>
+<p class="text-center text-gray-600 mb-16 max-w-2xl mx-auto">A collection of your most precious moments - your radiant smile, your graceful moves, and all the little things that make you absolutely perfect.</p>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden">
+    <img src="images/radiantSmile.PNG"
+         alt="Beautiful Photo"
+         class="w-full h-full object-cover">
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Radiant Smile</h3>
+<p class="text-gray-600 text-sm">A beautiful smile that captures my heart🍁</p>
+</div>
+</div>
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden bg-black relative">
+
+    <video class="scrollVideo w-full h-full object-cover"
+           muted
+           loop
+           playsinline>
+        <source src="images/dancing.mp4" type="video/mp4">
+    </video>
+
+    <button class="unmuteBtn absolute bottom-3 right-3 bg-white px-3 py-1 rounded">
+        🔊 Sound
+    </button>
+
+</div>
+
+
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Sweet Voice</h3>
+<p class="text-gray-600 text-sm">Your voice is soft magic… and every word feels like a gentle kiss.</p>
+</div>
+</div>
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden">
+    <img src="images/naturalBeautyyy.jpg"
+         alt="Beautiful Photo"
+         class="w-full h-full object-cover">
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Grace</h3>
+<p class="text-gray-600 text-sm">There’s something about your grace that feels like home.</p>
+</div>
+</div>
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden bg-black relative">
+
+    <video class="scrollVideo w-full h-full object-cover"
+           muted
+           loop
+           playsinline>
+        <source src="images/mayomikun.mp4" type="video/mp4">
+    </video>
+
+    <button class="unmuteBtn absolute bottom-3 right-3 bg-white px-3 py-1 rounded">
+        🔊 Sound
+    </button>
+
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Joyful Moments</h3>
+<p class="text-gray-600 text-sm">Your smile turns ordinary moments into something magical.</p>
+</div>
+</div>
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden">
+    <img src="images/natural.jpg"
+         alt="Beautiful Photo"
+         class="w-full h-full object-cover">
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Natural Beauty</h3>
+<p class="text-gray-600 text-sm">Your natural beauty steals my breath every time.</p>
+</div>
+</div>
+<div class="card-hover glass-morphism rounded-2xl overflow-hidden shadow-lg group">
+<div class="aspect-square overflow-hidden">
+    <img src="images/perfectMoment.jpg"
+         alt="Beautiful Photo"
+         class="w-full h-full object-cover">
+</div>
+<div class="p-4">
+<h3 class="font-semibold text-gray-800 mb-2">Your Perfect Moment</h3>
+<p class="text-gray-600 text-sm">A moment with you feels like it was made just for the heart.</p>
+</div>
+</div>
+</div>
+</修改前>
+</div>
+</section>
+<section class="py-20 px-4 bg-gradient-to-r from-rose-100 to-pink-100 section-divider">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-dancing text-5xl text-center text-gray-800 mb-16 gradient-text">Why You're So Special</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-heart-3-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Beautiful Soul</h3>
+<p class="text-gray-600 leading-relaxed">Your kindness and compassion shine through everything you do. You have the most beautiful heart I've ever known.</p>
+</div>
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-secondary to-primary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-star-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Radiant Smile</h3>
+<p class="text-gray-600 leading-relaxed">Every time you smile, you light up the entire room. Your joy is contagious and makes everything better.</p>
+</div>
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-flower-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Grace</h3>
+<p class="text-gray-600 leading-relaxed">The way you carry yourself with such elegance and confidence is absolutely mesmerizing. You're truly stunning.</p>
+</div>
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-secondary to-primary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-brain-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Intelligence</h3>
+<p class="text-gray-600 leading-relaxed">Our conversations are so meaningful because of your brilliant mind. You challenge me to be better every day.</p>
+</div>
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-music-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Laughter</h3>
+<p class="text-gray-600 leading-relaxed">The sound of your laughter is like music to my ears. It's the most beautiful sound in the world to me.</p>
+</div>
+<div class="card-hover glass-morphism p-8 rounded-2xl shadow-lg text-center">
+<div class="w-16 h-16 bg-gradient-to-r from-secondary to-primary rounded-full flex items-center justify-center mx-auto mb-6 shine-effect">
+<i class="ri-sun-fill text-white text-2xl"></i>
+</div>
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Your Energy</h3>
+<p class="text-gray-600 leading-relaxed">You bring such positive energy to everything around you. Being with you feels like sunshine on a perfect day.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 section-divider">
+<div class="max-w-4xl mx-auto">
+<h2 class="font-dancing text-5xl text-center text-gray-800 mb-16 gradient-text">Our Journey So Far</h2>
+<div class="relative">
+<div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-primary to-secondary h-full rounded-full"></div>
+<div class="space-y-12">
+<div class="timeline-item flex items-center">
+<div class="w-1/2 pr-8 text-right">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">First Hello</h3>
+<p class="text-gray-600">That nervous but excited feeling when we first started talking. I knew there was something special about you.</p>
+</div>
+<div class="w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg z-10 relative shine-effect"></div>
+<div class="w-1/2 pl-8"></div>
+</div>
+<div class="timeline-item flex items-center">
+<div class="w-1/2 pr-8"></div>
+<div class="w-8 h-8 bg-secondary rounded-full border-4 border-white shadow-lg z-10 relative shine-effect"></div>
+<div class="w-1/2 pl-8">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Getting Closer</h3>
+<p class="text-gray-600">Every conversation brought us closer. I found myself looking forward to hearing from you every day.</p>
+</div>
+</div>
+<div class="timeline-item flex items-center">
+<div class="w-1/2 pr-8 text-right">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Realizing My Feelings</h3>
+<p class="text-gray-600">The moment I realized that what I felt for you was more than friendship. You had captured my heart completely.</p>
+</div>
+<div class="w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg z-10 relative shine-effect"></div>
+<div class="w-1/2 pl-8"></div>
+</div>
+<div class="timeline-item flex items-center">
+<div class="w-1/2 pr-8"></div>
+<div class="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-full border-4 border-white shadow-lg z-10 relative pulse-heart shine-effect"></div>
+<div class="w-1/2 pl-8">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">This Moment</h3>
+<p class="text-gray-600">Right now, as I'm asking you to take this beautiful journey with me officially. Will you say yes?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 bg-gradient-to-r from-pink-100 to-rose-100 section-divider">
+<div class="max-w-4xl mx-auto text-center">
+<div class="pulse-heart text-8xl mb-8 floating-animation">💖</div>
+<h2 class="font-dancing text-6xl text-gray-800 mb-8 gradient-text">The Big Question</h2>
+<p class="text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed">
+I can't imagine my life without you in it. You make everything brighter, better, and more beautiful.
+Will you officially start this incredible journey with me?
+</p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button id="yesButton" class="button-hover-effect bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 !rounded-button text-lg font-semibold hover:from-secondary hover:to-primary transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer shine-effect">
+Yes, let's do this! 💕
+</button>
+<button class="button-hover-effect bg-white text-gray-700 border-2 border-gray-300 px-8 py-4 !rounded-button text-lg font-semibold hover:border-primary hover:text-primary transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap cursor-pointer">
+Let me think about it 💭
+</button>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 section-divider">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-dancing text-5xl text-center text-gray-800 mb-16 gradient-text">My Promises to You</h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="card-hover glass-morphism bg-gradient-to-br from-rose-50 to-pink-50 p-8 rounded-2xl shadow-lg">
+<img src="https://readdy.ai/api/search-image?query=romantic%20couple%20traveling%20together%20exploring%20beautiful%20destinations%2C%20adventure%20and%20love%2C%20warm%20golden%20lighting%2C%20caramel%20and%20rose%20gold%20tones%2C%20happy%20couple%20on%20vacation%2C%20romantic%20getaway%2C%20beautiful%20landscapes%2C%20love%20and%20adventure%20combined%2C%20dreamy%20travel%20moments&width=400&height=300&seq=promise001&orientation=landscape" alt="Adventures Together" class="w-full h-48 object-cover object-top rounded-xl mb-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Adventures Together</h3>
+<p class="text-gray-600 leading-relaxed">I promise to explore the world with you, create amazing memories, and turn every ordinary day into an extraordinary adventure.</p>
+</div>
+<div class="card-hover glass-morphism bg-gradient-to-br from-orange-50 to-rose-50 p-8 rounded-2xl shadow-lg">
+<img src="https://readdy.ai/api/search-image?query=caring%20hands%20holding%20each%20other%20with%20gentle%20touch%2C%20love%20and%20support%2C%20warm%20golden%20lighting%2C%20tender%20moment%2C%20emotional%20connection%2C%20comfort%20and%20care%2C%20beautiful%20caramel%20and%20gold%20tones%2C%20romantic%20gesture%2C%20intimate%20and%20loving%20touch%2C%20valentine%20romance&width=400&height=300&seq=promise002&orientation=landscape" alt="Care and Support" class="w-full h-48 object-cover object-top rounded-xl mb-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Endless Care</h3>
+<p class="text-gray-600 leading-relaxed">I promise to always be there for you, to support your dreams, celebrate your victories, and comfort you through any challenges.</p>
+</div>
+<div class="card-hover glass-morphism bg-gradient-to-br from-pink-50 to-orange-50 p-8 rounded-2xl shadow-lg">
+<img src="https://readdy.ai/api/search-image?query=couple%20building%20dreams%20together%20looking%20at%20beautiful%20future%2C%20hope%20and%20love%2C%20warm%20golden%20sunset%20lighting%2C%20romantic%20silhouette%2C%20dreamy%20atmosphere%2C%20caramel%20and%20rose%20gold%20tones%2C%20future%20planning%2C%20love%20and%20commitment%2C%20beautiful%20romantic%20scene%2C%20valentine%20inspiration&width=400&height=300&seq=promise003&orientation=landscape" alt="Building Dreams" class="w-full h-48 object-cover object-top rounded-xl mb-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Building Dreams</h3>
+<p class="text-gray-600 leading-relaxed">I promise to build a beautiful future with you, where we grow together, love deeper each day, and create a love story worth telling.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 bg-gradient-to-r from-rose-100 to-pink-100 section-divider">
+<div class="max-w-4xl mx-auto">
+<h2 class="font-dancing text-5xl text-center text-gray-800 mb-16 gradient-text">A Letter From My Heart</h2>
+<div class="flex justify-center">
+<div class="envelope relative cursor-pointer" id="loveEnvelope">
+<div class="bg-gradient-to-br from-primary to-secondary w-80 h-56 rounded-lg shadow-2xl relative overflow-hidden premium-shadow">
+<div class="envelope-flap absolute inset-x-0 top-0 h-32 bg-gradient-to-br from-secondary to-primary transform-origin-top" style="clip-path: polygon(0 0, 100% 0, 50% 100%);">
+<div class="absolute top-4 left-1/2 transform -translate-x-1/2">
+<div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center shine-effect">
+<i class="ri-heart-fill text-white text-lg"></i>
+</div>
+</div>
+</div>
+<div class="letter absolute inset-4 bg-white rounded-lg p-6 overflow-y-auto">
+<p class="font-dancing text-lg text-gray-800 leading-relaxed">
+My Dearest Olamiposi Ayomikun🤎,<br><br>
+Words can't express how you make me feel. Every day with you feels like a gift, and I find myself falling for you more and more.<br><br>
+Your beautiful caramel skin glows like golden honey in the sunlight, and your smile could light up the darkest room. But it's not just your outer beauty that captivates me – it's your incredible heart, your brilliant mind, and your amazing spirit.<br><br>
+I want to be the one who makes you laugh when you're sad, who celebrates with you when you're happy, and who stands by you through everything life brings our way.<br><br>
+Will you give us a chance to write our own love story?<br><br>
+Forever yours,<br>
+💕
+</p>
+</div>
+</div>
+<p class="text-center mt-4 text-gray-600 italic">Click to open the envelope</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="py-20 px-4 bg-gradient-to-r from-gray-900 to-gray-800 text-white relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
+<div class="relative z-10 max-w-4xl mx-auto text-center">
+<h2 class="font-dancing text-4xl mb-8">Send Me Your Answer</h2>
+<p class="text-xl mb-12 text-gray-300 max-w-2xl mx-auto">
+I'm waiting with my heart full of hope. Whatever your answer is, I want you to know that you mean the world to me.
+</p>
+<form id="valentineForm" action="https://formspree.io/f/mpwkzlqa" method="POST" class="max-w-md mx-auto space-y-6">
+<input type="text" name="name" placeholder="Your beautiful name" required class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors">
+<input type="email" name="email" placeholder="Your email (optional)" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors">
+<textarea name="message" placeholder="Your message to me..." rows="4" required maxlength="500" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-primary transition-colors resize-none"></textarea>
+<div class="text-right text-gray-400 text-sm">
+<span id="charCount">0</span>/500 characters
+</div>
+<button type="submit" id="submitButton" class="w-full button-hover-effect bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 !rounded-button text-lg font-semibold hover:from-secondary hover:to-primary transition-all duration-300 transform hover:scale-105 shadow-lg whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shine-effect">
+<span id="buttonText">Send My Heart to You 💌</span>
+</button>
+</form>
+<div id="formStatus" class="max-w-md mx-auto mt-6 text-center hidden">
+<div id="successMessage" class="bg-green-500/20 border border-green-500/30 text-green-100 p-4 rounded-lg hidden">
+<i class="ri-check-line text-xl mb-2"></i>
+<p class="font-semibold">Message Sent Successfully! 💕</p>
+<p class="text-sm opacity-90">Thank you for sharing your heart with me. I'll treasure your words always!</p>
+</div>
+<div id="errorMessage" class="bg-red-500/20 border border-red-500/30 text-red-100 p-4 rounded-lg hidden">
+<i class="ri-error-warning-line text-xl mb-2"></i>
+<p class="font-semibold">Oops! Something went wrong 😔</p>
+<p class="text-sm opacity-90">Please try again or reach out to me directly. Your message is important to me!</p>
+</div>
+</div>
+<div class="mt-16">
+<h3 class="font-dancing text-2xl text-center text-gray-300 mb-8">Connect With Me</h3>
+<div class="flex justify-center space-x-8">
+<div class="text-center">
+<button id="loveButton" class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center hover:from-secondary hover:to-primary transition-all duration-300 cursor-pointer shine-effect transform hover:scale-110 button-hover-effect shadow-2xl">
+<i class="ri-heart-fill text-3xl"></i>
+</button>
+<p class="text-gray-400 text-sm mt-3 font-medium">Spread Love</p>
+</div>
+<div class="text-center">
+<a href="https://wa.me/2347019898124?text=Hi%20my%20love!%20I%20just%20saw%20your%20beautiful%20valentine%27s%20proposal%20and%20my%20heart%20is%20absolutely%20melting!%20%F0%9F%92%95%20You%20are%20so%20incredibly%20romantic%20and%20thoughtful.%20I%20can%27t%20stop%20smiling!%20You%20make%20me%20feel%20like%20the%20luckiest%20person%20in%20the%20world.%20Thank%20you%20for%20being%20so%20amazing%20%E2%9D%A4%EF%B8%8F%F0%9F%8C%B9" target="_blank" class="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center hover:from-green-600 hover:to-green-700 transition-all duration-300 cursor-pointer shine-effect transform hover:scale-110 button-hover-effect shadow-2xl">
+<i class="ri-whatsapp-fill text-3xl"></i>
+</a>
+<p class="text-gray-400 text-sm mt-3 font-medium">WhatsApp Me</p>
+</div>
+<div class="text-center">
+<a href="tel:+2347019898124" class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center hover:from-blue-600 hover:to-blue-700 transition-all duration-300 cursor-pointer shine-effect transform hover:scale-110 button-hover-effect shadow-2xl">
+<i class="ri-phone-fill text-3xl"></i>
+</a>
+<p class="text-gray-400 text-sm mt-3 font-medium">Call Me</p>
+</div>
+</div>
+<p class="text-center text-gray-500 text-sm mt-8 max-w-md mx-auto italic">
+Choose how you'd like to respond to my heart. I'm here waiting with love and excitement! 💕 <br><br> Created by Adeperl🍁
+</p>
+</div>
+</div>
+</footer>
+<div class="love-overlay" id="loveOverlay"></div>
+<div class="love-popup glass-morphism rounded-3xl p-8 max-w-lg w-full mx-4" id="lovePopup">
+<div class="text-center">
+<div class="text-8xl mb-6 floating-animation">💖✨💕🌟</div>
+<h3 class="font-dancing text-4xl gradient-text mb-6">You Spread Love & Magic!</h3>
+<p class="text-gray-700 mb-8 leading-relaxed text-lg">
+Every click of love you make sends beautiful energy into the universe! Your heart is pure magic, and I'm so grateful to have you in my life. You're absolutely adorable, and your love makes everything sparkle! ✨
+</p>
+<div class="space-y-4 mb-8">
+<div class="bg-gradient-to-r from-primary/20 to-secondary/20 p-4 rounded-xl border border-primary/20">
+<p class="text-gray-700 font-medium italic">"You are my sunshine on cloudy days" ☀️💫</p>
+</div>
+<div class="bg-gradient-to-r from-secondary/20 to-primary/20 p-4 rounded-xl border border-secondary/20">
+<p class="text-gray-700 font-medium italic">"Your love makes everything beautiful" 🌺🌹</p>
+</div>
+<div class="bg-gradient-to-r from-pink-200/40 to-rose-200/40 p-4 rounded-xl border border-pink-300/30">
+<p class="text-gray-700 font-medium italic">"You're the sweetest person in the world" 🍯💝</p>
+</div>
+</div>
+<div class="flex space-x-3">
+<button class="flex-1 button-hover-effect bg-gradient-to-r from-primary to-secondary text-white px-6 py-4 !rounded-button font-semibold hover:from-secondary hover:to-primary transition-all duration-300 cursor-pointer shine-effect" id="closeLovePopup">
+Aww, you're so sweet! 💕
+</button>
+<button class="button-hover-effect bg-white text-primary border-2 border-primary px-6 py-4 !rounded-button font-semibold hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer" id="moreLovelySayings">
+Tell me more! 🥰
+</button>
+</div>
+</div>
+</div>
+<script>
+/* ===== AUTO PLAY / PAUSE ON SCROLL ===== */
+const videos = document.querySelectorAll(".scrollVideo");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const video = entry.target;
+
+        if (entry.isIntersecting) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
+}, { threshold: 0.6 });
+
+videos.forEach(video => observer.observe(video));
+
+
+/* ===== UNMUTE BUTTON ===== */
+document.querySelectorAll(".unmuteBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const video = btn.parentElement.querySelector("video");
+        video.muted = false;
+        video.play();
+        btn.style.display = "none";
+    });
+});
+</script>
+<script id="timeline-animation">
+document.addEventListener('DOMContentLoaded', function() {
+const timelineItems = document.querySelectorAll('.timeline-item');
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+}
+});
+}, { threshold: 0.5 });
+timelineItems.forEach(item => {
+observer.observe(item);
+});
+});
+</script>
+<script id="envelope-interaction">
+document.addEventListener('DOMContentLoaded', function() {
+const envelope = document.getElementById('loveEnvelope');
+envelope.addEventListener('click', function() {
+this.classList.toggle('open');
+});
+});
+</script>
+<script id="confetti-effect">
+document.addEventListener('DOMContentLoaded', function() {
+const yesButton = document.getElementById('yesButton');
+function createConfetti() {
+for (let i = 0; i < 50; i++) {
+const confetti = document.createElement('div');
+confetti.className = 'confetti';
+confetti.style.left = Math.random() * 100 + 'vw';
+confetti.style.backgroundColor = Math.random() > 0.5 ? '#f59e0b' : '#ec4899';
+confetti.style.animationDelay = Math.random() * 3 + 's';
+document.body.appendChild(confetti);
+setTimeout(() => {
+confetti.remove();
+}, 3000);
+}
+}
+yesButton.addEventListener('click', createConfetti);
+});
+</script>
+<script id="love-button-functionality">
+document.addEventListener('DOMContentLoaded', function() {
+const loveButton = document.getElementById('loveButton');
+const loveOverlay = document.getElementById('loveOverlay');
+const lovePopup = document.getElementById('lovePopup');
+const closeLovePopup = document.getElementById('closeLovePopup');
+function createHeartExplosion(x, y) {
+const heartExplosion = document.createElement('div');
+heartExplosion.className = 'heart-explosion';
+heartExplosion.style.left = x + 'px';
+heartExplosion.style.top = y + 'px';
+document.body.appendChild(heartExplosion);
+const hearts = ['💖', '💕', '💗', '💝', '🌹', '✨', '💫', '🌟', '💖', '🎀', '🦋', '🌸'];
+for (let i = 0; i < 16; i++) {
+const heartParticle = document.createElement('div');
+heartParticle.className = 'heart-particle';
+heartParticle.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+const angle = (i / 16) * 2 * Math.PI;
+const distance = 120 + Math.random() * 80;
+const x_offset = Math.cos(angle) * distance;
+const y_offset = Math.sin(angle) * distance;
+heartParticle.style.left = '50%';
+heartParticle.style.top = '50%';
+heartParticle.style.setProperty('--x', x_offset + 'px');
+heartParticle.style.setProperty('--y', y_offset + 'px');
+heartParticle.style.animationDelay = Math.random() * 0.5 + 's';
+heartParticle.style.fontSize = (1.2 + Math.random() * 0.8) + 'rem';
+heartExplosion.appendChild(heartParticle);
+}
+setTimeout(() => {
+heartExplosion.remove();
+}, 2500);
+for (let i = 0; i < 30; i++) {
+const confetti = document.createElement('div');
+confetti.className = 'confetti';
+confetti.style.left = x + (Math.random() - 0.5) * 300 + 'px';
+confetti.style.top = y + 'px';
+const colors = ['#f59e0b', '#ec4899', '#f97316', '#e11d48', '#8b5cf6'];
+confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+confetti.style.animationDelay = Math.random() * 1.5 + 's';
+confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+document.body.appendChild(confetti);
+setTimeout(() => {
+confetti.remove();
+}, 3000);
+}
+}
+loveButton.addEventListener('click', function(e) {
+const rect = this.getBoundingClientRect();
+const x = rect.left + rect.width / 2;
+const y = rect.top + rect.height / 2;
+createHeartExplosion(x, y);
+setTimeout(() => {
+loveOverlay.classList.add('active');
+lovePopup.classList.add('active');
+document.body.style.overflow = 'hidden';
+}, 500);
+});
+function closeLoveModal() {
+loveOverlay.classList.remove('active');
+lovePopup.classList.remove('active');
+document.body.style.overflow = 'auto';
+}
+const moreLovelySayings = document.getElementById('moreLovelySayings');
+const lovelySayings = [
+"Your smile could brighten the darkest day! 🌟",
+"You're like a beautiful butterfly, graceful and enchanting! 🦋",
+"Every moment with you is a treasure! 💎",
+"You make my heart dance with joy! 💃",
+"Your laughter is the most beautiful melody! 🎵",
+"You're absolutely magical, inside and out! ✨",
+"You bring sunshine wherever you go! ☀️",
+"Your beauty radiates from your soul! 💫"
+];
+let currentSayingIndex = 0;
+moreLovelySayings.addEventListener('click', function() {
+const sayingElements = lovePopup.querySelectorAll('.bg-gradient-to-r');
+const randomSaying = lovelySayings[currentSayingIndex % lovelySayings.length];
+currentSayingIndex++;
+if (sayingElements.length > 2) {
+sayingElements[2].querySelector('p').innerHTML = `"${randomSaying}"`;
+} else {
+const newSaying = document.createElement('div');
+newSaying.className = 'bg-gradient-to-r from-purple-200/40 to-pink-200/40 p-4 rounded-xl border border-purple-300/30';
+newSaying.innerHTML = `<p class="text-gray-700 font-medium italic">"${randomSaying}"</p>`;
+sayingElements[1].parentNode.appendChild(newSaying);
+}
+createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2);
+});
+closeLovePopup.addEventListener('click', closeLoveModal);
+loveOverlay.addEventListener('click', closeLoveModal);
+});
+</script>
+<script id="form-functionality">
+document.addEventListener('DOMContentLoaded', function() {
+const form = document.getElementById('valentineForm');
+const submitButton = document.getElementById('submitButton');
+const buttonText = document.getElementById('buttonText');
+const charCount = document.getElementById('charCount');
+const messageTextarea = document.querySelector('textarea[name="message"]');
+const formStatus = document.getElementById('formStatus');
+const successMessage = document.getElementById('successMessage');
+const errorMessage = document.getElementById('errorMessage');
+messageTextarea.addEventListener('input', function() {
+const currentLength = this.value.length;
+charCount.textContent = currentLength;
+if (currentLength > 500) {
+this.value = this.value.substring(0, 500);
+charCount.textContent = '500';
+}
+charCount.style.color = currentLength >= 450 ? '#ef4444' : '';
+});
+form.addEventListener('submit', async function(e) {
+e.preventDefault();
+submitButton.disabled = true;
+buttonText.innerHTML = '<i class="ri-loader-4-line animate-spin"></i> Sending...';
+formStatus.classList.add('hidden');
+successMessage.classList.add('hidden');
+errorMessage.classList.add('hidden');
+try {
+const formData = new FormData(form);
+const response = await fetch(form.action, {
+method: 'POST',
+body: formData,
+headers: {
+'Accept': 'application/json'
+}
+});
+if (response.ok) {
+formStatus.classList.remove('hidden');
+successMessage.classList.remove('hidden');
+form.reset();
+charCount.textContent = '0';
+for (let i = 0; i < 100; i++) {
+const confetti = document.createElement('div');
+confetti.className = 'confetti';
+confetti.style.left = Math.random() * 100 + 'vw';
+confetti.style.backgroundColor = Math.random() > 0.5 ? '#f59e0b' : '#ec4899';
+confetti.style.animationDelay = Math.random() * 3 + 's';
+document.body.appendChild(confetti);
+setTimeout(() => {
+confetti.remove();
+}, 3000);
+}
+} else {
+throw new Error('Form submission failed');
+}
+} catch (error) {
+formStatus.classList.remove('hidden');
+errorMessage.classList.remove('hidden');
+console.error('Form submission error:', error);
+} finally {
+submitButton.disabled = false;
+buttonText.textContent = 'Send My Heart to You 💌';
+}
+});
+});
+</script>
+<script id="smooth-scroll">
+document.addEventListener('DOMContentLoaded', function() {
+const heroButton = document.querySelector('section button');
+heroButton.addEventListener('click', function() {
+document.querySelector('section:nth-child(3)').scrollIntoView({
+behavior: 'smooth'
+});
+});
+});
+</script>
+</body>
+</html>
